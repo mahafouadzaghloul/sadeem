@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سديم | منصة المعرفة المتجددة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cyan:#00c8e0;
+  --blue:#2563eb;
+  --purple:#6b21d4;
+  --dark:#0f0a2e;
+  --mid:#1a1050;
+  --wa:#25d366;
+  --wa2:#128c7e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden;direction:rtl}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:3px}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,10,46,0.95);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,200,224,0.12);padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:46px;width:auto;filter:drop-shadow(0 0 8px rgba(0,200,224,0.4))}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.72);text-decoration:none;font-size:15px;font-weight:500;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;background:var(--cyan);transition:width .3s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-links a:hover::after{width:100%}
+.nav-wa{background:linear-gradient(135deg,var(--wa),var(--wa2));color:#fff;padding:10px 24px;border-radius:30px;text-decoration:none;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:7px;transition:transform .2s,box-shadow .2s;white-space:nowrap}
+.nav-wa:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.35)}
+.nav-wa svg{width:17px;height:17px;fill:#fff;flex-shrink:0}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 2rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.orb1{position:absolute;top:-8%;right:-8%;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(107,33,212,.38),transparent 68%)}
+.orb2{position:absolute;bottom:-12%;left:-8%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,224,.22),transparent 68%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,224,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,224,.04) 1px,transparent 1px);background-size:52px 52px}
+.hero-content{position:relative;z-index:1;max-width:820px}
+.hero-logo{width:130px;margin:0 auto 28px;filter:drop-shadow(0 0 24px rgba(0,200,224,.5))}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,224,.1);border:1px solid rgba(0,200,224,.3);border-radius:30px;padding:7px 20px;font-size:13px;color:var(--cyan);margin-bottom:24px;font-weight:600}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{font-family:'Tajawal',sans-serif;font-size:clamp(38px,6vw,70px);font-weight:900;line-height:1.15;margin-bottom:18px}
+.grad{background:linear-gradient(135deg,var(--cyan),var(--blue) 50%,var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:18px;color:rgba(255,255,255,.62);line-height:1.85;margin-bottom:38px;max-width:600px;margin-inline:auto}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#fff;padding:14px 36px;border-radius:40px;text-decoration:none;font-size:16px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,200,224,.38)}
+.btn-wa{background:linear-gradient(135deg,var(--wa),var(--wa2));color:#fff;padding:14px 36px;border-radius:40px;text-decoration:none;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(37,211,102,.35)}
+.btn-wa svg,.nav-wa svg,.float-wa svg,.wa-icon svg,.wa-btn svg,.footer-wa svg{fill:#fff}
+
+
+/* ══ SECTIONS BASE ══ */
+section{padding:88px 2rem}
+.container{max-width:1200px;margin:0 auto}
+.sec-tag{display:inline-block;background:rgba(0,200,224,.1);border:1px solid rgba(0,200,224,.25);color:var(--cyan);font-size:12px;font-weight:700;padding:5px 18px;border-radius:20px;letter-spacing:1px;margin-bottom:14px}
+.sec-title{font-family:'Tajawal',sans-serif;font-size:clamp(26px,4vw,44px);font-weight:900;margin-bottom:14px;line-height:1.2}
+.sec-sub{font-size:16px;color:rgba(255,255,255,.52);max-width:580px;line-height:1.85}
+.sec-hd{margin-bottom:52px}
+.wave{height:2px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent)}
+
+/* ══ ABOUT ══ */
+.about-sec{background:rgba(26,16,80,.45);border-top:1px solid rgba(107,33,212,.2);border-bottom:1px solid rgba(107,33,212,.2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.founder-wrap{position:relative;text-align:center}
+.founder-ring{width:290px;height:290px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));padding:4px;margin:0 auto}
+.founder-inner{width:100%;height:100%;border-radius:50%;background:var(--mid);overflow:hidden}
+.founder-inner img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.founder-name{margin-top:18px}
+.founder-name h3{font-family:'Tajawal',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px}
+.founder-name p{font-size:13px;color:var(--cyan);font-weight:600}
+.about-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.ab{background:rgba(0,200,224,.08);border:1px solid rgba(0,200,224,.2);color:rgba(255,255,255,.82);padding:8px 15px;border-radius:20px;font-size:13px;font-weight:500}
+.ab.pur{background:rgba(107,33,212,.1);border-color:rgba(107,33,212,.3);color:rgba(210,190,255,.9)}
+
+/* ══ ACCREDITATIONS ══ */
+.accred-sec{background:rgba(15,10,46,.8)}
+.accred-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:52px}
+.accred-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:28px 20px;text-align:center;transition:all .3s}
+.accred-card:hover{border-color:rgba(0,200,224,.3);transform:translateY(-4px)}
+.accred-card img{width:90px;height:90px;object-fit:contain;margin:0 auto 14px;filter:drop-shadow(0 4px 12px rgba(0,200,224,.2))}
+.accred-card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7}
+
+/* Stamp + Agreement */
+.docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.doc-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;transition:all .3s}
+.doc-card:hover{border-color:rgba(107,33,212,.4);transform:translateY(-4px)}
+.doc-card img{width:100%;height:260px;object-fit:contain;background:rgba(255,255,255,.03);padding:16px}
+.doc-card-body{padding:20px 24px}
+.doc-card-body h4{font-family:'Tajawal',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px}
+.doc-card-body p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7}
+.doc-zoomable{cursor:zoom-in;position:relative}
+.doc-zoomable:hover{border-color:rgba(0,200,224,.4)!important}
+.doc-zoom-hint{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.65);color:rgba(255,255,255,.9);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:'Cairo',sans-serif;backdrop-filter:blur(4px);pointer-events:none}
+
+/* ══ COURSES (workshops) ══ */
+.courses-sec{background:rgba(26,16,80,.35)}
+.workshops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ws-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;transition:all .3s}
+.ws-card:hover{transform:translateY(-6px);border-color:rgba(107,33,212,.42)}
+.ws-img-wrap{position:relative;overflow:hidden}
+.ws-img-wrap img{width:100%;height:220px;object-fit:cover;object-position:top center;display:block}
+.ws-done{position:absolute;top:10px;right:10px;background:rgba(16,185,129,.92);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:'Cairo',sans-serif;backdrop-filter:blur(4px)}
+.ws-body{padding:18px 20px}
+.ws-tag{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--cyan);margin-bottom:6px}
+.ws-body h3{font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;line-height:1.45;color:#fff}
+.ws-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:rgba(255,255,255,.4)}
+.ws-wa{display:inline-flex;align-items:center;gap:5px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:var(--wa);padding:6px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:700;transition:all .2s}
+.ws-wa:hover{background:rgba(37,211,102,.18)}
+
+/* ══ COOPERATION ══ */
+.coop-sec{background:rgba(15,10,46,.9)}
+.coop-mosaic{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.coop-card{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:all .3s;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.02)}
+.coop-card:hover{border-color:rgba(0,200,224,.3);transform:translateY(-4px)}
+.coop-card img{width:100%;height:100%;object-fit:cover;display:block}
+.coop-soon{flex-direction:column;gap:10px;border-style:dashed;border-color:rgba(255,255,255,.15)}
+.coop-soon span{font-size:32px}
+.coop-soon p{font-size:13px;color:rgba(255,255,255,.35);font-weight:600}
+
+/* ══ COUNTERS ══ */
+.counter-sec{background:rgba(26,16,80,.5);padding:56px 2rem}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto}
+.counter-card{text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px 20px;transition:all .3s;position:relative;overflow:hidden}
+.counter-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));transform:scaleX(0);transition:transform .4s}
+.counter-card:hover::before{transform:scaleX(1)}
+.counter-card:hover{border-color:rgba(0,200,224,.25);transform:translateY(-4px)}
+.counter-icon{font-size:28px;margin-bottom:12px}
+.counter-num{font-family:'Tajawal',sans-serif;font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.counter-num::after{content:'+';font-size:26px}
+.counter-label{font-size:14px;color:rgba(255,255,255,.52);margin-top:8px;font-weight:600}
+@media(max-width:700px){.counter-grid{grid-template-columns:repeat(2,1fr)}.coop-mosaic{grid-template-columns:repeat(2,1fr)}}
+
+/* ══ FEATURES ══ */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px 26px;transition:all .3s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,200,224,.05),transparent);opacity:0;transition:.3s}
+.feat-card:hover::before{opacity:1}
+.feat-card:hover{border-color:rgba(0,200,224,.25);transform:translateY(-4px)}
+.feat-icon{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:22px}
+.ci{background:rgba(0,200,224,.12);border:1px solid rgba(0,200,224,.2)}
+.pi{background:rgba(107,33,212,.12);border:1px solid rgba(107,33,212,.25)}
+.bi{background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.2)}
+.feat-card h3{font-family:'Tajawal',sans-serif;font-size:18px;font-weight:700;margin-bottom:9px}
+.feat-card p{font-size:14px;color:rgba(255,255,255,.52);line-height:1.8}
+
+/* ══ CTA WHATSAPP ══ */
+.cta-sec{background:linear-gradient(135deg,rgba(107,33,212,.22),rgba(0,200,224,.1));border-top:1px solid rgba(107,33,212,.22)}
+.cta-inner{text-align:center;max-width:680px;margin:0 auto}
+.cta-inner h2{font-family:'Tajawal',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:900;margin-bottom:14px}
+.cta-inner>p{font-size:17px;color:rgba(255,255,255,.58);margin-bottom:38px;line-height:1.8}
+.wa-box{background:rgba(37,211,102,.07);border:1px solid rgba(37,211,102,.25);border-radius:24px;padding:40px 32px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.wa-icon{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--wa),var(--wa2));display:flex;align-items:center;justify-content:center}
+.wa-icon svg{width:42px;height:42px}
+.wa-number{font-family:'Tajawal',sans-serif;font-size:30px;font-weight:900;letter-spacing:2px;direction:ltr}
+.wa-sub{font-size:13px;color:rgba(255,255,255,.48);margin-top:-10px}
+.wa-btn{background:linear-gradient(135deg,var(--wa),var(--wa2));color:#fff;padding:15px 46px;border-radius:40px;text-decoration:none;font-size:17px;font-weight:700;display:inline-flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s}
+.wa-btn:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(37,211,102,.4)}
+.wa-btn svg{width:20px;height:20px}
+
+/* ══ FLOATING WA ══ */
+.float-wa{position:fixed;bottom:26px;left:26px;z-index:999;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--wa),var(--wa2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(37,211,102,.45);text-decoration:none;animation:floatUp 3.5s ease-in-out infinite;transition:transform .2s}
+.float-wa:hover{transform:scale(1.1)!important}
+@keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.float-wa svg{width:33px;height:33px}
+
+/* ══ FOOTER ══ */
+footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);padding:56px 2rem 26px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px}
+.footer-logo img{height:54px;margin-bottom:14px;filter:drop-shadow(0 0 10px rgba(0,200,224,.3))}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,.42);line-height:1.82;max-width:250px;margin-bottom:18px}
+.footer-wa{display:inline-flex;align-items:center;gap:7px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.26);color:var(--wa);padding:9px 18px;border-radius:28px;text-decoration:none;font-size:13px;font-weight:700;transition:all .2s;direction:ltr}
+.footer-wa:hover{background:rgba(37,211,102,.18)}
+.footer-wa svg{width:16px;height:16px;fill:var(--wa)}
+.footer-col h4{font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:var(--cyan);margin-bottom:18px}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:10px}
+.footer-col ul li a{color:rgba(255,255,255,.48);text-decoration:none;font-size:14px;transition:color .2s}
+.footer-col ul li a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.07);padding-top:22px;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.28)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .accred-grid{grid-template-columns:repeat(2,1fr)}
+  .workshops-grid,.feat-grid{grid-template-columns:1fr 1fr}
+  .docs-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .workshops-grid,.feat-grid,.accred-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+}
+
+/* ══ WHATSAPP SVG shorthand ══ */
+.wa-svg-path{d:path("M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z")}
+</style>
+</head>
+<body>
+
+<!-- ══ FLOATING WHATSAPP ══ -->
+<a href="https://wa.me/96594901254" target="_blank" class="float-wa" aria-label="واتساب">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="assets/logo.png" alt="سديم">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">من نحن</a></li>
+      <li><a href="#accred">الاعتمادات</a></li>
+      <li><a href="#workshops">الدورات</a></li>
+      <li><a href="#cooperation">الشراكات</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+    <a href="https://wa.me/96594901254" target="_blank" class="nav-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      تواصل عبر واتساب
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb1"></div>
+    <div class="orb2"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div class="badge"><span class="badge-dot"></span>منصة المعرفة المتجددة</div>
+    <h1>وجهتك الأولى<br><span class="grad">لاحتراف التدريب</span></h1>
+    <p>منصة سديم تجمع نخبة من المدربين الدوليين المعتمدين في الكويت والوطن العربي — لأن التعلم رحلة لا تنتهي</p>
+    <div class="btns">
+      <a href="#workshops" class="btn-p">استكشف الدورات</a>
+      <a href="https://wa.me/96594901254" target="_blank" class="btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تواصل معنا
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ COUNTERS ══ -->
+<section class="counter-sec">
+  <div class="container">
+    <div class="counter-grid">
+      <div class="counter-card">
+        <div class="counter-icon">👁️</div>
+        <div class="counter-num" data-target="12480">0</div>
+        <div class="counter-label">زيارة للموقع</div>
+      </div>
+      <div class="counter-card">
+        <div class="counter-icon">🎓</div>
+        <div class="counter-num" data-target="847">0</div>
+        <div class="counter-label">متدرب مستفيد</div>
+      </div>
+      <div class="counter-card">
+        <div class="counter-icon">👨‍🏫</div>
+        <div class="counter-num" data-target="63">0</div>
+        <div class="counter-label">مدرب معتمد</div>
+      </div>
+      <div class="counter-card">
+        <div class="counter-icon">📋</div>
+        <div class="counter-num" data-target="38">0</div>
+        <div class="counter-label">دورة وورشة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ ABOUT / FOUNDER ══ -->
+<section class="about-sec" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="sec-tag">المؤسس</div>
+        <h2 class="sec-title">أ. محمد الراشد<br><span style="color:var(--cyan)">المدرب الدولي المعتمد</span></h2>
+        <p style="color:rgba(255,255,255,.62);line-height:1.9;font-size:16px;margin-bottom:22px">أسّس الأستاذ محمد الراشد منصة سديم لتكون التجمع الأول للمدربين الدوليين المعتمدين في الكويت والوطن العربي، ساعياً إلى رفع مستوى التدريب وتطوير الكوادر البشرية المتميزة.</p>
+        <div class="about-badges">
+          <span class="ab">🏅 مدرب دولي معتمد TOT</span>
+          <span class="ab pur">🇰🇼 عضو المعهد الكويتي للتدريب</span>
+          <span class="ab">📜 ترخيص 232 | AIA | كندي</span>
+          <span class="ab pur">🌍 خبير بالوطن العربي</span>
+        </div>
+        <div style="margin-top:26px">
+          <a href="https://wa.me/96594901254" target="_blank" class="btn-wa" style="font-size:15px;padding:12px 28px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            تواصل مع المؤسس
+          </a>
+        </div>
+      </div>
+      <div class="founder-wrap">
+        <div class="founder-ring">
+          <div class="founder-inner">
+            <img src="assets/founder.png" alt="أ. محمد الراشد">
+          </div>
+        </div>
+        <div class="founder-name">
+          <h3>أ. محمد الراشد</h3>
+          <p>مؤسس ومدير منصة سديم</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ ACCREDITATIONS ══ -->
+<section class="accred-sec" id="accred">
+  <div class="container">
+    <div class="sec-hd">
+      <div class="sec-tag">الاعتمادات</div>
+      <h2 class="sec-title">معتمدون من أبرز المنظمات الدولية</h2>
+      <p class="sec-sub">تحمل منصة سديم اعتمادات دولية معترفاً بها في الكويت والوطن العربي وكندا</p>
+    </div>
+
+    <div class="accred-grid">
+      <div class="accred-card">
+        <img src="assets/accreditation1.png" alt="اعتماد 1">
+      </div>
+      <div class="accred-card">
+        <img src="assets/accreditation2.png" alt="اعتماد 2">
+      </div>
+      <div class="accred-card">
+        <img src="assets/accreditation3.png" alt="اعتماد 3">
+      </div>
+      <div class="accred-card">
+        <img src="assets/accreditation4.png" alt="اعتماد 4">
+      </div>
+    </div>
+
+    <!-- ختم + اتفاقية -->
+    <div style="margin-top:52px">
+      <h3 style="font-family:'Tajawal',sans-serif;font-size:24px;font-weight:800;margin-bottom:24px;text-align:center">وثائق الاعتماد والتعاون</h3>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <img src="assets/stamp.jpg" alt="ختم الاعتماد الرسمي">
+          <div class="doc-card-body">
+            <h4>ختم الاعتماد الرسمي</h4>
+            <p>معتمد من المعهد الدولي الكويتي للتدريب — منصة سديم للمعرفة المتجددة</p>
+          </div>
+        </div>
+        <div class="doc-card doc-zoomable" onclick="openLightbox('assets/agreement.jpg','اتفاقية تعاون مشترك')">
+          <img src="assets/agreement.jpg" alt="اتفاقية التعاون">
+          <div class="doc-zoom-hint">🔍 اضغط للتكبير</div>
+          <div class="doc-card-body">
+            <h4>اتفاقية تعاون مشترك</h4>
+            <p>اتفاقية تعاون موقّعة بين المعهد الدولي الكويتي للتدريب الأهلي وشركاء النجاح ومنصة سديم</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out">
+  <div style="position:relative;max-width:700px;width:100%">
+    <button onclick="closeLightbox()" style="position:absolute;top:-44px;left:0;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;padding:6px 14px;border-radius:8px">✕ إغلاق</button>
+    <img id="lightbox-img" src="" alt="" style="width:100%;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.8)">
+    <p id="lightbox-cap" style="text-align:center;margin-top:14px;color:rgba(255,255,255,.7);font-size:15px;font-family:'Cairo',sans-serif"></p>
+  </div>
+</div>
+
+<div class="wave"></div>
+
+<!-- ══ WORKSHOPS / COURSES ══ -->
+<section class="courses-sec" id="workshops">
+  <div class="container">
+    <div class="sec-hd">
+      <div class="sec-tag">الدورات والورش</div>
+      <h2 class="sec-title">برامجنا التدريبية المتخصصة</h2>
+      <p class="sec-sub">دورات وورش حقيقية قدّمتها منصة سديم بأيدي مدربين معتمدين دولياً</p>
+    </div>
+    <div class="workshops-grid">
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop1.png" alt="دورة مدرب معتمد بالذكاء الاصطناعي">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">دورة معتمدة</div>
+          <h3>مدرّب معتمد بالذكاء الاصطناعي — الدفعة 8</h3>
+          <div class="ws-footer"><span>KD 55 | يونيو 2026</span></div>
+        </div>
+      </div>
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop2.png" alt="كيف تكون قيادي مطلوب">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">ورشة عمل</div>
+          <h3>كيف تكون قيادياً مطلوباً على الإطلاق — استعداداً للمقابلة</h3>
+          <div class="ws-footer"><span>د. وفاء عريعر</span></div>
+        </div>
+      </div>
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop3.png" alt="من الكتاب إلى درس ذكي">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">ورشة لمعلمي العلوم</div>
+          <h3>من الكتاب إلى درس ذكي — توظيف الذكاء الاصطناعي</h3>
+          <div class="ws-footer"><span>أ. علي عيسى غريب حسن</span></div>
+        </div>
+      </div>
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop4.png" alt="وداعاً للتشتت أونلاين">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">ورشة عمل</div>
+          <h3>وداعاً للتشتت أونلاين — د. وسمية المشعان</h3>
+          <div class="ws-footer"><span>مدرب دولي معتمد</span></div>
+        </div>
+      </div>
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop5.png" alt="دورة الادارة الصفية">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">دورة مجانية</div>
+          <h3>دورة الإدارة الصفية — أ. محمد مجبل الظفيري</h3>
+          <div class="ws-footer"><span>FREE — خاص لمشتركي سديم</span></div>
+        </div>
+      </div>
+
+      <div class="ws-card">
+        <div class="ws-img-wrap">
+          <img src="assets/workshop6.png" alt="ورشة قانونية لأصحاب المشاريع">
+          <span class="ws-done">✔ تمّت</span>
+        </div>
+        <div class="ws-body">
+          <div class="ws-tag">ورشة قانونية</div>
+          <h3>التعاملات والعقود والقوانين المنظمة لأصحاب المشاريع الصغيرة</h3>
+          <div class="ws-footer"><span>أ. مشعل متعب — محامي ومدرب معتمد</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ COOPERATION ══ -->
+<section class="coop-sec" id="cooperation">
+  <div class="container">
+    <div class="sec-hd">
+      <div class="sec-tag">الشراكات</div>
+      <h2 class="sec-title">بروتوكولات تعاون مع الشركاء</h2>
+      <p class="sec-sub">منصة سديم تبني شراكات استراتيجية لتوسيع نطاق الخدمات وتحقيق قيمة مضافة للمتدربين</p>
+    </div>
+    <div class="coop-mosaic">
+      <div class="coop-card"><img src="assets/cooperatio.png" alt="بروتوكول تعاون مع سابق القانونية"></div>
+      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
+      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
+      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ FEATURES ══ -->
+<section>
+  <div class="container">
+    <div class="sec-hd">
+      <div class="sec-tag">لماذا سديم؟</div>
+      <h2 class="sec-title">منصة تدريبية متكاملة بمعايير دولية</h2>
+      <p class="sec-sub">نقدّم تجربة تدريبية فريدة تجمع بين الخبرة الدولية والأسلوب العربي الأصيل</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon ci">🎯</div><h3>مدربون معتمدون دولياً</h3><p>جميع مدربينا يحملون اعتمادات معترف بها من أبرز المنظمات التدريبية العالمية</p></div>
+      <div class="feat-card"><div class="feat-icon pi">📚</div><h3>محتوى متجدد باستمرار</h3><p>نحرص على تحديث المناهج بما يواكب أحدث التطورات في مجال التطوير البشري والذكاء الاصطناعي</p></div>
+      <div class="feat-card"><div class="feat-icon bi">🌐</div><h3>شبكة عربية واسعة</h3><p>نجمع المدربين من الكويت وسائر دول الخليج والوطن العربي في تجمع مهني احترافي</p></div>
+      <div class="feat-card"><div class="feat-icon ci">🏆</div><h3>شهادات دولية معتمدة</h3><p>احصل على شهادة معتمدة من المعهد الكويتي الدولي وجهات شريكة أمريكية وكندية</p></div>
+      <div class="feat-card"><div class="feat-icon pi">💡</div><h3>تدريب تطبيقي عملي</h3><p>نعتمد المنهجية التطبيقية التي تضمن ترجمة المعرفة إلى مهارات قابلة للتطبيق الفوري</p></div>
+      <div class="feat-card"><div class="feat-icon bi">🤝</div><h3>دعم ومتابعة مستمرة</h3><p>فريقنا يرافقك في رحلتك التدريبية ويقدم الدعم اللازم لضمان أفضل نتائج ممكنة</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ CTA WHATSAPP ══ -->
+<section class="cta-sec" id="contact">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="sec-tag">تواصل معنا</div>
+      <h2>ابدأ رحلتك معنا<br><span style="background:linear-gradient(135deg,#25d366,#128c7e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">عبر واتساب مباشرةً</span></h2>
+      <p>تواصل معنا الآن للإجابة على جميع استفساراتك واختيار البرنامج التدريبي المناسب لك</p>
+      <div class="wa-box">
+        <div class="wa-icon">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="wa-number">+965 94901254</div>
+        <div class="wa-sub">متاحون للرد على استفساراتك في أي وقت</div>
+        <a href="https://wa.me/96594901254" target="_blank" class="wa-btn">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          ابدأ المحادثة الآن
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="assets/logo.png" alt="سديم"></div>
+        <p class="footer-brand">منصة المعرفة المتجددة — وجهتك الأولى لاحتراف التدريب في الكويت والوطن العربي</p>
+        <a href="https://wa.me/96594901254" target="_blank" class="footer-wa">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          +965 94901254
+        </a>
+      </div>
+      <div class="footer-col">
+        <h4>الموقع</h4>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#about">من نحن</a></li>
+          <li><a href="#accred">الاعتمادات</a></li>
+          <li><a href="#workshops">الدورات</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الدورات</h4>
+        <ul>
+          <li><a href="#">مدرّب بالذكاء الاصطناعي</a></li>
+          <li><a href="#">الإدارة الصفية</a></li>
+          <li><a href="#">التشتت الرقمي</a></li>
+          <li><a href="#">الاحتياجات الخاصة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل</h4>
+        <ul>
+          <li><a href="https://wa.me/96594901254" target="_blank" style="color:#25d366;font-weight:700">واتساب: 94901254</a></li>
+          <li><a href="#">الكويت العاصمة</a></li>
+          <li><a href="#">تويتر / X</a></li>
+          <li><a href="#">إنستغرام</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 منصة سديم — جميع الحقوق محفوظة | عضو المعهد الكويتي الدولي للتدريب | ترخيص 232</p>
+      <p style="color:rgba(255,255,255,.22);font-size:11px;direction:ltr">+965 94901254</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ══ LIGHTBOX ══
+function openLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-cap').textContent = caption;
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+// ══ COUNTER ANIMATION ══
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-target'));
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current).toLocaleString('ar-EG');
+  }, 16);
+}
+
+// Trigger when section enters viewport
+const counters = document.querySelectorAll('.counter-num');
+let triggered = false;
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !triggered) {
+      triggered = true;
+      counters.forEach(c => animateCounter(c));
+    }
+  });
+}, { threshold: 0.4 });
+
+const counterSec = document.querySelector('.counter-sec');
+if (counterSec) observer.observe(counterSec);
+
+// ══ LIVE VISITOR COUNTER (simulated real-time) ══
+// Seeds a base from localStorage and increments gradually
+const visitorEl = document.querySelector('[data-target="12480"]');
+if (visitorEl) {
+  const key = 'sadeem_visits';
+  let stored = parseInt(localStorage.getItem(key) || '12480');
+  // Increment by small random amount on each visit
+  stored += Math.floor(Math.random() * 4) + 1;
+  localStorage.setItem(key, stored);
+  visitorEl.setAttribute('data-target', stored);
+}
+</script>
+
+</body>
+</html>
