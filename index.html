@@ -58,7 +58,9 @@ nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,10,46,0.95);b
 .btn-wa{background:linear-gradient(135deg,var(--wa),var(--wa2));color:#fff;padding:14px 36px;border-radius:40px;text-decoration:none;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
 .btn-wa:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(37,211,102,.35)}
 .btn-wa svg,.nav-wa svg,.float-wa svg,.wa-icon svg,.wa-btn svg,.footer-wa svg{fill:#fff}
-
+.stats{display:flex;gap:52px;justify-content:center;margin-top:60px;flex-wrap:wrap}
+.stat-num{font-family:'Tajawal',sans-serif;font-size:38px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:13px;color:rgba(255,255,255,.48);margin-top:4px;text-align:center}
 
 /* ══ SECTIONS BASE ══ */
 section{padding:88px 2rem}
@@ -86,10 +88,78 @@ section{padding:88px 2rem}
 /* ══ ACCREDITATIONS ══ */
 .accred-sec{background:rgba(15,10,46,.8)}
 .accred-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:52px}
-.accred-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:28px 20px;text-align:center;transition:all .3s}
-.accred-card:hover{border-color:rgba(0,200,224,.3);transform:translateY(-4px)}
-.accred-card img{width:90px;height:90px;object-fit:contain;margin:0 auto 14px;filter:drop-shadow(0 4px 12px rgba(0,200,224,.2))}
-.accred-card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7}
+.accred-card{
+  position:relative;text-align:center;padding:32px 20px 24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.04) 0%,rgba(107,33,212,.06) 100%);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:24px;
+  transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+  overflow:hidden;
+  cursor:default;
+}
+.accred-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,200,224,.12) 0%,transparent 70%);
+  opacity:0;transition:opacity .4s;
+}
+.accred-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,200,224,.35);
+  box-shadow:0 20px 50px rgba(0,0,0,.35),0 0 0 1px rgba(0,200,224,.15),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.accred-card:hover::before{opacity:1}
+/* shimmer line on top */
+.accred-card::after{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,200,224,.6),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.accred-card:hover::after{opacity:1}
+.accred-logo-wrap{
+  width:110px;height:110px;margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.accred-logo-wrap::before{
+  content:'';position:absolute;inset:-4px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(0,200,224,.7),rgba(107,33,212,.7),rgba(0,200,224,.7));
+  animation:spinRing 6s linear infinite;
+  opacity:0;transition:opacity .4s;
+}
+.accred-card:hover .accred-logo-wrap::before{opacity:1}
+.accred-logo-wrap::after{
+  content:'';position:absolute;inset:-1px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(0,200,224,.25),rgba(107,33,212,.25),rgba(0,200,224,.25));
+  opacity:1;
+}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.accred-logo-inner{
+  width:106px;height:106px;border-radius:50%;
+  background:linear-gradient(145deg,rgba(18,10,50,.95),rgba(30,15,70,.95));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+  border:1px solid rgba(255,255,255,.06);
+}
+.accred-logo-inner img{
+  width:72px;height:72px;object-fit:contain;
+  filter:drop-shadow(0 2px 10px rgba(0,200,224,.4));
+  transition:transform .4s,filter .4s;
+}
+.accred-card:hover .accred-logo-inner img{
+  transform:scale(1.1);
+  filter:drop-shadow(0 4px 16px rgba(0,200,224,.7));
+}
+.accred-name{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;font-weight:500;letter-spacing:.3px}
+/* lightbox */
+.lb-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(6px)}
+.lb-overlay.active{display:flex}
+.lb-overlay img{max-width:92vw;max-height:88vh;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.7);cursor:default}
+.lb-close{position:fixed;top:22px;left:28px;color:#fff;font-size:36px;cursor:pointer;opacity:.8;line-height:1;z-index:10000;transition:opacity .2s}
+.lb-close:hover{opacity:1}
+.doc-card.clickable{cursor:zoom-in}
+.doc-card.clickable:hover img{opacity:.88}
 
 /* Stamp + Agreement */
 .docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
@@ -99,18 +169,13 @@ section{padding:88px 2rem}
 .doc-card-body{padding:20px 24px}
 .doc-card-body h4{font-family:'Tajawal',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px}
 .doc-card-body p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7}
-.doc-zoomable{cursor:zoom-in;position:relative}
-.doc-zoomable:hover{border-color:rgba(0,200,224,.4)!important}
-.doc-zoom-hint{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.65);color:rgba(255,255,255,.9);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:'Cairo',sans-serif;backdrop-filter:blur(4px);pointer-events:none}
 
 /* ══ COURSES (workshops) ══ */
 .courses-sec{background:rgba(26,16,80,.35)}
 .workshops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.ws-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;transition:all .3s}
+.ws-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;transition:all .3s;cursor:pointer}
 .ws-card:hover{transform:translateY(-6px);border-color:rgba(107,33,212,.42)}
-.ws-img-wrap{position:relative;overflow:hidden}
-.ws-img-wrap img{width:100%;height:220px;object-fit:cover;object-position:top center;display:block}
-.ws-done{position:absolute;top:10px;right:10px;background:rgba(16,185,129,.92);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:'Cairo',sans-serif;backdrop-filter:blur(4px)}
+.ws-card img{width:100%;height:220px;object-fit:cover;object-position:top center;display:block}
 .ws-body{padding:18px 20px}
 .ws-tag{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--cyan);margin-bottom:6px}
 .ws-body h3{font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;line-height:1.45;color:#fff}
@@ -119,27 +184,25 @@ section{padding:88px 2rem}
 .ws-wa:hover{background:rgba(37,211,102,.18)}
 
 /* ══ COOPERATION ══ */
-.coop-sec{background:rgba(15,10,46,.9)}
-.coop-mosaic{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.coop-card{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:all .3s;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.02)}
-.coop-card:hover{border-color:rgba(0,200,224,.3);transform:translateY(-4px)}
-.coop-card img{width:100%;height:100%;object-fit:cover;display:block}
-.coop-soon{flex-direction:column;gap:10px;border-style:dashed;border-color:rgba(255,255,255,.15)}
-.coop-soon span{font-size:32px}
-.coop-soon p{font-size:13px;color:rgba(255,255,255,.35);font-weight:600}
-
 /* ══ COUNTERS ══ */
-.counter-sec{background:rgba(26,16,80,.5);padding:56px 2rem}
-.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto}
-.counter-card{text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px 20px;transition:all .3s;position:relative;overflow:hidden}
-.counter-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));transform:scaleX(0);transition:transform .4s}
-.counter-card:hover::before{transform:scaleX(1)}
-.counter-card:hover{border-color:rgba(0,200,224,.25);transform:translateY(-4px)}
-.counter-icon{font-size:28px;margin-bottom:12px}
-.counter-num{font-family:'Tajawal',sans-serif;font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.counter-num::after{content:'+';font-size:26px}
-.counter-label{font-size:14px;color:rgba(255,255,255,.52);margin-top:8px;font-weight:600}
-@media(max-width:700px){.counter-grid{grid-template-columns:repeat(2,1fr)}.coop-mosaic{grid-template-columns:repeat(2,1fr)}}
+.counters-sec{background:linear-gradient(135deg,rgba(107,33,212,.15),rgba(0,200,224,.08));border-top:1px solid rgba(107,33,212,.2);border-bottom:1px solid rgba(0,200,224,.15)}
+.counters-grid{display:flex;gap:0;justify-content:center;flex-wrap:wrap}
+.counter-item{flex:1;min-width:180px;text-align:center;padding:42px 24px;position:relative}
+.counter-item:not(:last-child)::after{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.08)}
+.counter-num{font-family:'Tajawal',sans-serif;font-size:54px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;display:block}
+.counter-icon{font-size:30px;margin-bottom:10px;display:block}
+.counter-label{font-size:15px;color:rgba(255,255,255,.6);margin-top:8px;font-weight:500}
+.counter-item:hover .counter-num{filter:brightness(1.2)}
+
+/* ══ COOPERATION ══ */
+.coop-sec{background:rgba(15,10,46,.9)}
+.coop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.coop-card{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:all .3s;background:rgba(255,255,255,.03)}
+.coop-card:hover{border-color:rgba(0,200,224,.3);transform:translateY(-4px)}
+.coop-card img{width:100%;height:200px;object-fit:cover;object-position:top center;display:block}
+.coop-card-label{padding:10px 14px;font-size:13px;color:rgba(255,255,255,.55);text-align:center;line-height:1.5}
+@media(max-width:900px){.coop-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.coop-grid{grid-template-columns:1fr}}
 
 /* ══ FEATURES ══ */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -192,20 +255,206 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
 .footer-bottom p{font-size:12px;color:rgba(255,255,255,.28)}
 
 /* ══ RESPONSIVE ══ */
+/* ══════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+══════════════════════════════ */
 @media(max-width:900px){
-  .about-grid{grid-template-columns:1fr}
-  .accred-grid{grid-template-columns:repeat(2,1fr)}
-  .workshops-grid,.feat-grid{grid-template-columns:1fr 1fr}
-  .docs-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
+  /* Nav */
   .nav-links{display:none}
-}
-@media(max-width:600px){
-  .workshops-grid,.feat-grid,.accred-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr}
+  nav{padding:0 1.2rem}
+  .nav-wa{padding:8px 16px;font-size:13px}
+
+  /* Hero */
+  .hero{padding:100px 1.4rem 4rem}
+  .hero-logo{width:100px;margin-bottom:20px}
+  .hero p{font-size:16px}
+
+  /* Counters */
+  .counters-grid{flex-wrap:wrap}
+  .counter-item{min-width:calc(33.33% - 1px);padding:28px 16px}
+  .counter-num{font-size:40px}
+  .counter-icon{font-size:24px}
+  .counter-label{font-size:13px}
+
+  /* Sections */
+  section{padding:64px 1.4rem}
+  .sec-hd{margin-bottom:36px}
+  .sec-sub{font-size:15px}
+
+  /* About */
+  .about-grid{grid-template-columns:1fr}
+  .founder-ring{width:220px;height:220px}
+
+  /* Accreditations */
+  .accred-grid{grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:36px}
+  .accred-logo-wrap{width:90px;height:90px}
+  .accred-logo-inner{width:86px;height:86px}
+  .accred-logo-inner img{width:58px;height:58px}
+
+  /* Docs */
+  .docs-grid{grid-template-columns:1fr}
+  .coop-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* Workshops */
+  .workshops-grid{grid-template-columns:1fr 1fr}
+
+  /* Services */
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* Features */
+  .feat-grid{grid-template-columns:1fr 1fr}
+
+  /* Pricing */
+  .price-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}
+  .price-card.featured{transform:scale(1)}
+
+  /* Footer */
+  .footer-top{grid-template-columns:1fr 1fr}
 }
 
-/* ══ WHATSAPP SVG shorthand ══ */
+/* ══════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+══════════════════════════════ */
+@media(max-width:600px){
+  /* Nav */
+  nav{padding:0 1rem}
+  .nav-logo img{height:38px}
+  .nav-wa{padding:7px 13px;font-size:12px;gap:5px}
+  .nav-wa svg{width:14px;height:14px}
+
+  /* Hero */
+  .hero{padding:90px 1.1rem 3.5rem;min-height:auto}
+  .hero-logo{width:82px;margin-bottom:16px}
+  .badge{font-size:11px;padding:6px 14px}
+  .hero h1{font-size:clamp(28px,8vw,42px);line-height:1.2}
+  .hero p{font-size:14px;margin-bottom:28px}
+  .btn-p,.btn-wa{padding:12px 26px;font-size:14px}
+  .hero-btns{flex-direction:column;align-items:center;gap:12px}
+
+  /* Counters — stack vertically */
+  .counter-item{min-width:100%;padding:22px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .counter-item:not(:last-child)::after{display:none}
+  .counter-num{font-size:44px}
+  .counter-icon{font-size:26px;margin-bottom:6px}
+  .counter-label{font-size:14px}
+
+  /* Sections */
+  section{padding:52px 1rem}
+  .sec-hd{margin-bottom:28px;text-align:center}
+  .sec-sub{font-size:14px;margin-inline:auto}
+
+  /* About */
+  .founder-ring{width:180px;height:180px}
+  .about-badges{justify-content:center}
+  .founder-name{text-align:center}
+  .about-text h2{text-align:center}
+
+  /* Accreditations */
+  .accred-grid{grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+  .accred-card{padding:20px 12px 16px}
+  .accred-logo-wrap{width:76px;height:76px}
+  .accred-logo-inner{width:72px;height:72px}
+  .accred-logo-inner img{width:48px;height:48px}
+  .accred-name{font-size:11px}
+
+  /* Docs */
+  .docs-grid{grid-template-columns:1fr}
+  .doc-card img{height:200px}
+
+  /* Cooperation */
+  .coop-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .coop-card img{height:150px}
+  .coop-card-label{font-size:12px;padding:8px 10px}
+
+  /* Workshops */
+  .workshops-grid{grid-template-columns:1fr}
+
+  /* Services */
+  .svc-grid{grid-template-columns:1fr}
+  .svc-card{padding:26px 20px 22px}
+  .svc-icon-wrap{width:48px;height:48px;font-size:20px;margin-bottom:16px}
+  .svc-card h3{font-size:17px}
+  .svc-card p{font-size:13px}
+
+  /* Features */
+  .feat-grid,.accred-grid{grid-template-columns:1fr}
+  .feat-card{padding:22px 18px}
+  .feat-card h3{font-size:16px}
+  .feat-card p{font-size:13px}
+
+  /* Pricing */
+  .price-grid{grid-template-columns:1fr;max-width:100%}
+  .price-card{padding:28px 20px}
+  .price-card.featured{transform:scale(1)}
+  .price-tier{font-size:12px}
+  .price-features li{font-size:13px}
+
+  /* CTA */
+  .cta-inner h2{font-size:clamp(22px,6vw,34px)}
+  .cta-inner p{font-size:14px}
+
+  /* Footer */
+  .footer-top{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+  .footer-brand{font-size:13px}
+
+  /* Float WhatsApp */
+  .float-wa{width:52px;height:52px;bottom:18px;left:18px}
+  .float-wa svg{width:26px;height:26px}
+
+  /* Lightbox close */
+  .lb-close{top:14px;left:14px;font-size:28px}
+}
+
+/* ══════════════════════════════
+   RESPONSIVE — SMALL (≤380px)
+══════════════════════════════ */
+@media(max-width:380px){
+  .hero h1{font-size:26px}
+  .hero p{font-size:13px}
+  .accred-grid{grid-template-columns:1fr 1fr}
+  .coop-grid{grid-template-columns:1fr}
+  .counters-grid{flex-direction:column}
+  .counter-item{border-bottom:1px solid rgba(255,255,255,.05)}
+  .counter-item:not(:last-child)::after{display:none}
+  nav{padding:0 .8rem}
+  section{padding:44px .9rem}
+}
+
+/* ══ HAMBURGER ══ */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;border-radius:8px}
+.hamburger span{display:block;width:24px;height:2px;background:rgba(255,255,255,.8);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-drawer{
+  display:block;position:fixed;top:72px;right:0;left:0;z-index:190;
+  background:rgba(12,8,38,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,200,224,.15);
+  padding:0;max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),padding .4s ease;
+}
+.mob-drawer.open{max-height:600px;padding:8px 0 24px}
+
+.mob-drawer ul{list-style:none;padding:0;margin:0}
+.mob-drawer li a{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 24px;font-size:16px;font-weight:700;
+  color:rgba(255,255,255,.82);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  transition:color .2s,background .2s,padding-right .2s;
+}
+.mob-drawer li a:hover,.mob-drawer li a:active{
+  color:var(--cyan);background:rgba(0,200,224,.06);padding-right:30px;
+}
+.mob-drawer li a .m-icon{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:rgba(107,33,212,.2);border:1px solid rgba(107,33,212,.3);
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  transition:background .2s;
+}
+.mob-drawer li a:hover .m-icon{background:rgba(0,200,224,.15);border-color:rgba(0,200,224,.3);}
+@media(max-width:900px){.hamburger{display:flex}}
 .wa-svg-path{d:path("M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z")}
 </style>
 </head>
@@ -226,15 +475,42 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
       <li><a href="#about">من نحن</a></li>
       <li><a href="#accred">الاعتمادات</a></li>
       <li><a href="#workshops">الدورات</a></li>
+      <li><a href="#services">خدماتنا</a></li>
       <li><a href="#cooperation">الشراكات</a></li>
+      <li><a href="#pricing">العضويات</a></li>
       <li><a href="#contact">تواصل معنا</a></li>
     </ul>
-    <a href="https://wa.me/96594901254" target="_blank" class="nav-wa">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="https://wa.me/96594901254" target="_blank" class="nav-wa">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تواصل عبر واتساب
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="القائمة">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mob-drawer" id="mobDrawer">
+  <ul>
+    <li><a href="#about" onclick="closeDrw()"><span class="m-icon">👤</span>من نحن</a></li>
+    <li><a href="#accred" onclick="closeDrw()"><span class="m-icon">🏅</span>الاعتمادات</a></li>
+    <li><a href="#workshops" onclick="closeDrw()"><span class="m-icon">📋</span>الدورات والورش</a></li>
+    <li><a href="#services" onclick="closeDrw()"><span class="m-icon">⚙️</span>خدماتنا</a></li>
+    <li><a href="#cooperation" onclick="closeDrw()"><span class="m-icon">🤝</span>الشراكات</a></li>
+    <li><a href="#pricing" onclick="closeDrw()"><span class="m-icon">💎</span>العضويات</a></li>
+    <li><a href="#contact" onclick="closeDrw()"><span class="m-icon">📞</span>تواصل معنا</a></li>
+  </ul>
+  <div style="padding:16px 24px 4px">
+    <a href="https://wa.me/96594901254" target="_blank" onclick="closeDrw()"
+       style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:13px;border-radius:14px;text-decoration:none;font-size:15px;font-weight:800">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       تواصل عبر واتساب
     </a>
   </div>
-</nav>
+</div>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
@@ -247,49 +523,95 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
     <div class="badge"><span class="badge-dot"></span>منصة المعرفة المتجددة</div>
     <h1>وجهتك الأولى<br><span class="grad">لاحتراف التدريب</span></h1>
     <p>منصة سديم تجمع نخبة من المدربين الدوليين المعتمدين في الكويت والوطن العربي — لأن التعلم رحلة لا تنتهي</p>
-    <div class="btns">
+    <div class="btns hero-btns">
       <a href="#workshops" class="btn-p">استكشف الدورات</a>
       <a href="https://wa.me/96594901254" target="_blank" class="btn-wa">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         تواصل معنا
       </a>
     </div>
+
   </div>
 </section>
 
 <div class="wave"></div>
 
-<!-- ══ COUNTERS ══ -->
-<section class="counter-sec">
+<!-- ══ LIVE COUNTERS ══ -->
+<section class="counters-sec" style="padding:0">
   <div class="container">
-    <div class="counter-grid">
-      <div class="counter-card">
-        <div class="counter-icon">👁️</div>
-        <div class="counter-num" data-target="12480">0</div>
-        <div class="counter-label">زيارة للموقع</div>
+    <div class="counters-grid">
+      <div class="counter-item">
+        <span class="counter-icon">👁️</span>
+        <span class="counter-num" id="cnt-visitors">—</span>
+        <div class="counter-label">زائر للموقع</div>
       </div>
-      <div class="counter-card">
-        <div class="counter-icon">🎓</div>
-        <div class="counter-num" data-target="847">0</div>
-        <div class="counter-label">متدرب مستفيد</div>
-      </div>
-      <div class="counter-card">
-        <div class="counter-icon">👨‍🏫</div>
-        <div class="counter-num" data-target="63">0</div>
+      <div class="counter-item">
+        <span class="counter-icon">👨‍🏫</span>
+        <span class="counter-num" id="cnt-trainers">—</span>
         <div class="counter-label">مدرب معتمد</div>
       </div>
-      <div class="counter-card">
-        <div class="counter-icon">📋</div>
-        <div class="counter-num" data-target="38">0</div>
-        <div class="counter-label">دورة وورشة</div>
+      <div class="counter-item">
+        <span class="counter-icon">🎓</span>
+        <span class="counter-num" id="cnt-trainees">—</span>
+        <div class="counter-label">متدرب مستفيد</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wave"></div>
+<script>
+(function(){
+  /* ── tiny localStorage counter store ── */
+  function getStore(){
+    try{return JSON.parse(localStorage.getItem('sadeemStats')||'null');}catch(e){return null;}
+  }
+  function setStore(d){try{localStorage.setItem('sadeemStats',JSON.stringify(d));}catch(e){}}
 
-<!-- ══ ABOUT / FOUNDER ══ -->
+  /* seed values — edit these anytime */
+  const SEED={visitors:1240, trainers:58, trainees:620};
+
+  let store=getStore();
+  if(!store){
+    store={visitors:SEED.visitors, trainers:SEED.trainers, trainees:SEED.trainees, lastVisit:0};
+  }
+
+  /* increment visitor count once per browser session */
+  const SESSION_KEY='sadeemVisited';
+  if(!sessionStorage.getItem(SESSION_KEY)){
+    store.visitors+=1;
+    sessionStorage.setItem(SESSION_KEY,'1');
+  }
+  setStore(store);
+
+  /* animate a number from 0 to target */
+  function animate(el, target){
+    const dur=1800, fps=16;
+    const step=target/(dur/fps);
+    let cur=0;
+    const t=setInterval(()=>{
+      cur=Math.min(cur+step, target);
+      el.textContent=Math.floor(cur).toLocaleString('ar-EG')+(target>9?'+':'');
+      if(cur>=target)clearInterval(t);
+    },fps);
+  }
+
+  /* trigger on scroll into view */
+  const items=[
+    {el:document.getElementById('cnt-visitors'),  val:store.visitors},
+    {el:document.getElementById('cnt-trainers'),  val:store.trainers},
+    {el:document.getElementById('cnt-trainees'),  val:store.trainees},
+  ];
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const found=items.find(i=>i.el===e.target);
+        if(found){animate(found.el,found.val);obs.unobserve(e.target);}
+      }
+    });
+  },{threshold:0.4});
+  items.forEach(i=>{if(i.el)obs.observe(i.el);});
+})();
+</script>
 <section class="about-sec" id="about">
   <div class="container">
     <div class="about-grid">
@@ -338,16 +660,28 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
 
     <div class="accred-grid">
       <div class="accred-card">
-        <img src="assets/accreditation1.png" alt="اعتماد 1">
+        <div class="accred-logo-wrap">
+          <div class="accred-logo-inner"><img src="assets/accreditation1.png" alt="المعهد الكويتي الدولي"></div>
+        </div>
+        <div class="accred-name">المعهد الكويتي<br>الدولي للتدريب</div>
       </div>
       <div class="accred-card">
-        <img src="assets/accreditation2.png" alt="اعتماد 2">
+        <div class="accred-logo-wrap">
+          <div class="accred-logo-inner"><img src="assets/accreditation2.png" alt="AIA الرابطة الأمريكية"></div>
+        </div>
+        <div class="accred-name">الرابطة الأمريكية<br>الدولية AIA</div>
       </div>
       <div class="accred-card">
-        <img src="assets/accreditation3.png" alt="اعتماد 3">
+        <div class="accred-logo-wrap">
+          <div class="accred-logo-inner"><img src="assets/accreditation3.png" alt="الرابطة الكندية"></div>
+        </div>
+        <div class="accred-name">الرابطة الكندية<br>الدولية للتدريب</div>
       </div>
       <div class="accred-card">
-        <img src="assets/accreditation4.png" alt="اعتماد 4">
+        <div class="accred-logo-wrap">
+          <div class="accred-logo-inner"><img src="assets/accreditation4.png" alt="CAAA"></div>
+        </div>
+        <div class="accred-name">منصة الاعتماد<br>الأكاديمي CAAA</div>
       </div>
     </div>
 
@@ -362,11 +696,10 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
             <p>معتمد من المعهد الدولي الكويتي للتدريب — منصة سديم للمعرفة المتجددة</p>
           </div>
         </div>
-        <div class="doc-card doc-zoomable" onclick="openLightbox('assets/agreement.jpg','اتفاقية تعاون مشترك')">
+        <div class="doc-card clickable" onclick="openLightbox('assets/agreement.jpg')">
           <img src="assets/agreement.jpg" alt="اتفاقية التعاون">
-          <div class="doc-zoom-hint">🔍 اضغط للتكبير</div>
           <div class="doc-card-body">
-            <h4>اتفاقية تعاون مشترك</h4>
+            <h4>اتفاقية تعاون مشترك <span style="font-size:12px;color:var(--cyan);margin-right:6px">🔍 اضغط للتكبير</span></h4>
             <p>اتفاقية تعاون موقّعة بين المعهد الدولي الكويتي للتدريب الأهلي وشركاء النجاح ومنصة سديم</p>
           </div>
         </div>
@@ -374,15 +707,6 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
     </div>
   </div>
 </section>
-
-<!-- ══ LIGHTBOX ══ -->
-<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out">
-  <div style="position:relative;max-width:700px;width:100%">
-    <button onclick="closeLightbox()" style="position:absolute;top:-44px;left:0;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;padding:6px 14px;border-radius:8px">✕ إغلاق</button>
-    <img id="lightbox-img" src="" alt="" style="width:100%;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.8)">
-    <p id="lightbox-cap" style="text-align:center;margin-top:14px;color:rgba(255,255,255,.7);font-size:15px;font-family:'Cairo',sans-serif"></p>
-  </div>
-</div>
 
 <div class="wave"></div>
 
@@ -397,74 +721,68 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
     <div class="workshops-grid">
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop1.png" alt="دورة مدرب معتمد بالذكاء الاصطناعي">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop1.png" alt="دورة مدرب معتمد بالذكاء الاصطناعي">
         <div class="ws-body">
           <div class="ws-tag">دورة معتمدة</div>
           <h3>مدرّب معتمد بالذكاء الاصطناعي — الدفعة 8</h3>
-          <div class="ws-footer"><span>KD 55 | يونيو 2026</span></div>
+          <div class="ws-footer">
+            <span>KD 55 | يونيو 2026</span>
+          </div>
         </div>
       </div>
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop2.png" alt="كيف تكون قيادي مطلوب">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop2.png" alt="كيف تكون قيادي مطلوب">
         <div class="ws-body">
           <div class="ws-tag">ورشة عمل</div>
           <h3>كيف تكون قيادياً مطلوباً على الإطلاق — استعداداً للمقابلة</h3>
-          <div class="ws-footer"><span>د. وفاء عريعر</span></div>
+          <div class="ws-footer">
+            <span>د. وفاء عريعر</span>
+          </div>
         </div>
       </div>
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop3.png" alt="من الكتاب إلى درس ذكي">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop3.png" alt="من الكتاب إلى درس ذكي">
         <div class="ws-body">
           <div class="ws-tag">ورشة لمعلمي العلوم</div>
           <h3>من الكتاب إلى درس ذكي — توظيف الذكاء الاصطناعي</h3>
-          <div class="ws-footer"><span>أ. علي عيسى غريب حسن</span></div>
+          <div class="ws-footer">
+            <span>أ. علي عيسى غريب حسن</span>
+          </div>
         </div>
       </div>
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop4.png" alt="وداعاً للتشتت أونلاين">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop4.png" alt="وداعاً للتشتت أونلاين">
         <div class="ws-body">
           <div class="ws-tag">ورشة عمل</div>
           <h3>وداعاً للتشتت أونلاين — د. وسمية المشعان</h3>
-          <div class="ws-footer"><span>مدرب دولي معتمد</span></div>
+          <div class="ws-footer">
+            <span>مدرب دولي معتمد</span>
+          </div>
         </div>
       </div>
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop5.png" alt="دورة الادارة الصفية">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop5.png" alt="دورة الادارة الصفية">
         <div class="ws-body">
           <div class="ws-tag">دورة مجانية</div>
           <h3>دورة الإدارة الصفية — أ. محمد مجبل الظفيري</h3>
-          <div class="ws-footer"><span>FREE — خاص لمشتركي سديم</span></div>
+          <div class="ws-footer">
+            <span>FREE — خاص لمشتركي سديم</span>
+          </div>
         </div>
       </div>
 
       <div class="ws-card">
-        <div class="ws-img-wrap">
-          <img src="assets/workshop6.png" alt="ورشة قانونية لأصحاب المشاريع">
-          <span class="ws-done">✔ تمّت</span>
-        </div>
+        <img src="assets/workshop6.png" alt="ورشة قانونية لأصحاب المشاريع">
         <div class="ws-body">
           <div class="ws-tag">ورشة قانونية</div>
           <h3>التعاملات والعقود والقوانين المنظمة لأصحاب المشاريع الصغيرة</h3>
-          <div class="ws-footer"><span>أ. مشعل متعب — محامي ومدرب معتمد</span></div>
+          <div class="ws-footer">
+            <span>أ. مشعل متعب — محامي ومدرب معتمد</span>
+          </div>
         </div>
       </div>
 
@@ -482,18 +800,137 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
       <h2 class="sec-title">بروتوكولات تعاون مع الشركاء</h2>
       <p class="sec-sub">منصة سديم تبني شراكات استراتيجية لتوسيع نطاق الخدمات وتحقيق قيمة مضافة للمتدربين</p>
     </div>
-    <div class="coop-mosaic">
-      <div class="coop-card"><img src="assets/cooperatio.png" alt="بروتوكول تعاون مع سابق القانونية"></div>
-      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
-      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
-      <div class="coop-card coop-soon"><span>🤝</span><p>شراكة قادمة</p></div>
+    <div class="coop-grid">
+      <div class="coop-card">
+        <img src="assets/cooperatio.png" alt="بروتوكول تعاون مع سابق القانونية">
+        <div class="coop-card-label">سابق للخدمات القانونية</div>
+      </div>
+      <!-- أضف صورة الشريك 2 هنا -->
+      <div class="coop-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;border-style:dashed;opacity:.4">
+        <span style="font-size:32px">＋</span>
+        <div class="coop-card-label">شريك قادم</div>
+      </div>
+      <!-- أضف صورة الشريك 3 هنا -->
+      <div class="coop-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;border-style:dashed;opacity:.4">
+        <span style="font-size:32px">＋</span>
+        <div class="coop-card-label">شريك قادم</div>
+      </div>
+      <!-- أضف صورة الشريك 4 هنا -->
+      <div class="coop-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;border-style:dashed;opacity:.4">
+        <span style="font-size:32px">＋</span>
+        <div class="coop-card-label">شريك قادم</div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="wave"></div>
 
-<!-- ══ FEATURES ══ -->
+<!-- ══ SERVICES ══ -->
+<section id="services">
+<style>
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.svc-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:22px;padding:36px 28px 32px;
+  position:relative;overflow:hidden;
+  transition:transform .4s cubic-bezier(.175,.885,.32,1.275),border-color .4s,box-shadow .4s;
+  cursor:default;
+}
+/* glow blob top-right */
+.svc-card::before{
+  content:'';position:absolute;top:-40px;left:-40px;
+  width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(107,33,212,.35),transparent 70%);
+  opacity:0;transition:opacity .5s;pointer-events:none;
+}
+/* shimmer line bottom */
+.svc-card::after{
+  content:'';position:absolute;bottom:0;right:10%;left:10%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  transform:scaleX(0);transition:transform .4s;border-radius:2px;
+}
+.svc-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,200,224,.28);
+  box-shadow:0 20px 50px rgba(0,0,0,.3),0 0 0 1px rgba(0,200,224,.08),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.svc-card:hover::before{opacity:1}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon-wrap{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(107,33,212,.25),rgba(0,200,224,.15));
+  border:1px solid rgba(0,200,224,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;font-size:24px;
+  transition:transform .35s,box-shadow .35s;
+}
+.svc-card:hover .svc-icon-wrap{
+  transform:scale(1.1) rotate(-4deg);
+  box-shadow:0 8px 24px rgba(107,33,212,.4);
+}
+.svc-card h3{
+  font-family:'Tajawal',sans-serif;font-size:19px;font-weight:800;
+  margin-bottom:12px;color:#fff;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,.85));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.svc-card p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.85}
+@media(max-width:860px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.svc-grid{grid-template-columns:1fr}}
+</style>
+<div class="container">
+  <div class="sec-hd">
+    <div class="sec-tag">ما نقدمه</div>
+    <h2 class="sec-title">خدمات متكاملة للمدرب <span class="grad">المحترف</span></h2>
+    <p class="sec-sub">نتكفّل بكل التفاصيل لتتفرّغ تماماً لمحتواك التدريبي</p>
+  </div>
+  <div class="svc-grid">
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🎧</div>
+      <h3>الرد على العملاء</h3>
+      <p>فريقنا يجيب على استفسارات المتدربين وينجز الحجز نيابةً عنك حتى تتفرّغ للتحضير</p>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">📣</div>
+      <h3>تسويق ونشر الدورات</h3>
+      <p>نتولى الإعلان عن دوراتك عبر قنوات المنصة والتواصل الاجتماعي لجمهور واسع عربياً</p>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🏛️</div>
+      <h3>قاعات تدريبية مخصومة</h3>
+      <p>احجز قاعات مجهّزة بالكويت بأسعار حصرية لأعضاء سديم مع التجهيز التقني الكامل</p>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">📜</div>
+      <h3>شهادة انتساب معتمدة</h3>
+      <p>الانتماء لسديم يعزز مصداقيتك كمدرب دولي ويرفع حضورك في السوق العربي</p>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🚌</div>
+      <h3>خدمات لوجيستية شاملة</h3>
+      <p>نستر التنظيم من استقبال المتدربين والمواد التدريبية والتنسيق مع المرافق</p>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🎓</div>
+      <h3>دورات مجانية للأعضاء</h3>
+      <p>حصص تدريبية مجانية لرفع كفاءة المدربين في مهارات التقديم والتكنولوجيا التعليمية</p>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ FEATURES (لماذا سديم) ══ -->
 <section>
   <div class="container">
     <div class="sec-hd">
@@ -510,6 +947,124 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
       <div class="feat-card"><div class="feat-icon bi">🤝</div><h3>دعم ومتابعة مستمرة</h3><p>فريقنا يرافقك في رحلتك التدريبية ويقدم الدعم اللازم لضمان أفضل نتائج ممكنة</p></div>
     </div>
   </div>
+</section>
+
+<div class="wave"></div>
+
+<!-- ══ PRICING ══ -->
+<section style="padding:90px 0;background:linear-gradient(180deg,rgba(15,10,46,0) 0%,rgba(107,33,212,.06) 50%,rgba(15,10,46,0) 100%)" id="pricing">
+<style>
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;max-width:1050px;margin:0 auto}
+.price-card{
+  border-radius:24px;padding:36px 28px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  position:relative;transition:transform .35s,box-shadow .35s;
+}
+.price-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.price-card.featured{
+  background:linear-gradient(145deg,rgba(107,33,212,.35),rgba(0,150,200,.2));
+  border:1px solid rgba(0,200,224,.3);
+  transform:scale(1.03);
+  box-shadow:0 20px 60px rgba(107,33,212,.3),0 0 0 1px rgba(0,200,224,.15);
+}
+.price-card.featured:hover{transform:scale(1.03) translateY(-6px)}
+.price-badge{
+  position:absolute;top:-14px;right:50%;transform:translateX(50%);
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  color:#fff;font-size:11px;font-weight:800;padding:5px 18px;
+  border-radius:20px;letter-spacing:.5px;white-space:nowrap;
+}
+.price-tier{font-size:13px;color:rgba(255,255,255,.45);font-weight:600;margin-bottom:16px;letter-spacing:.5px}
+.price-amount{
+  font-family:'Tajawal',sans-serif;font-size:48px;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.price-card.featured .price-amount{
+  background:linear-gradient(135deg,var(--cyan),#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.price-currency{font-size:20px;font-weight:700;vertical-align:top;margin-top:10px;display:inline-block;color:rgba(255,255,255,.6)}
+.price-period{font-size:13px;color:rgba(255,255,255,.35);margin-top:6px;margin-bottom:28px}
+.price-divider{height:1px;background:rgba(255,255,255,.07);margin-bottom:24px}
+.price-card.featured .price-divider{background:rgba(0,200,224,.15)}
+.price-features{list-style:none;padding:0;margin:0 0 32px;display:flex;flex-direction:column;gap:12px}
+.price-features li{font-size:14px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px}
+.price-features li::before{
+  content:'✓';width:20px;height:20px;border-radius:50%;
+  background:rgba(0,200,224,.12);border:1px solid rgba(0,200,224,.3);
+  color:var(--cyan);font-size:11px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.price-card.featured .price-features li::before{background:rgba(0,200,224,.2);border-color:var(--cyan)}
+.price-btn{
+  display:block;text-align:center;width:100%;padding:14px;border-radius:40px;
+  font-size:15px;font-weight:800;text-decoration:none;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:#fff;transition:all .3s;
+}
+.price-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+.price-card.featured .price-btn{
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  border:none;box-shadow:0 8px 24px rgba(107,33,212,.4);
+}
+.price-card.featured .price-btn:hover{box-shadow:0 12px 32px rgba(107,33,212,.6);transform:translateY(-2px)}
+@media(max-width:860px){.price-grid{grid-template-columns:1fr;max-width:420px}.price-card.featured{transform:scale(1)}}
+</style>
+<div class="container">
+  <div class="sec-hd">
+    <div class="sec-tag">العضويات</div>
+    <h2 class="sec-title">ابدأ رحلتك مع <span class="grad">سديم</span></h2>
+    <p class="sec-sub">شرط الانضمام: الحصول على اعتماد مدرب دولي معتمد</p>
+  </div>
+
+  <div class="price-grid">
+
+    <!-- Basic -->
+    <div class="price-card">
+      <div class="price-tier">عضوية أساسية</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>نشر الملف الشخصي</li>
+        <li>خصم 10% على القاعات</li>
+        <li>دورة تدريبية مجانية</li>
+        <li>الظهور في دليل المدربين</li>
+      </ul>
+      <a href="https://wa.me/96594901254" target="_blank" class="price-btn">اشترك الآن</a>
+    </div>
+
+    <!-- Pro (featured) -->
+    <div class="price-card featured">
+      <div class="price-badge">⭐ الأكثر طلباً</div>
+      <div class="price-tier">عضوية محترف</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>كل مزايا الأساسية</li>
+        <li>خصم 30% على القاعات</li>
+        <li>تسويق 4 دورات سنوياً</li>
+        <li>خدمة رد على العملاء</li>
+        <li>3 دورات مجانية</li>
+      </ul>
+      <a href="https://wa.me/96594901254" target="_blank" class="price-btn">اشترك الآن</a>
+    </div>
+
+    <!-- Premium -->
+    <div class="price-card">
+      <div class="price-tier">عضوية بريميوم</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>كل مزايا المحترف</li>
+        <li>خصم 50% على القاعات</li>
+        <li>تسويق غير محدود</li>
+        <li>دعم لوجيستي كامل</li>
+        <li>أولوية الظهور</li>
+      </ul>
+      <a href="https://wa.me/96594901254" target="_blank" class="price-btn">اشترك الآن</a>
+    </div>
+
+  </div>
+</div>
 </section>
 
 <div class="wave"></div>
@@ -583,64 +1138,37 @@ footer{background:rgba(8,4,24,.97);border-top:1px solid rgba(255,255,255,.07);pa
   </div>
 </footer>
 
+<!-- ══ LIGHTBOX ══ -->
+<div class="lb-overlay" id="lightbox" onclick="closeLightbox()">
+  <span class="lb-close" onclick="closeLightbox()">✕</span>
+  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
 <script>
-// ══ LIGHTBOX ══
-function openLightbox(src, caption) {
-  const lb = document.getElementById('lightbox');
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox-cap').textContent = caption;
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+function openLightbox(src){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow='hidden';
 }
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-  document.body.style.overflow = '';
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow='';
 }
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
-
-// ══ COUNTER ANIMATION ══
-function animateCounter(el) {
-  const target = parseInt(el.getAttribute('data-target'));
-  const duration = 2000;
-  const step = target / (duration / 16);
-  let current = 0;
-  const timer = setInterval(() => {
-    current += step;
-    if (current >= target) {
-      current = target;
-      clearInterval(timer);
-    }
-    el.textContent = Math.floor(current).toLocaleString('ar-EG');
-  }, 16);
-}
-
-// Trigger when section enters viewport
-const counters = document.querySelectorAll('.counter-num');
-let triggered = false;
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !triggered) {
-      triggered = true;
-      counters.forEach(c => animateCounter(c));
-    }
-  });
-}, { threshold: 0.4 });
-
-const counterSec = document.querySelector('.counter-sec');
-if (counterSec) observer.observe(counterSec);
-
-// ══ LIVE VISITOR COUNTER (simulated real-time) ══
-// Seeds a base from localStorage and increments gradually
-const visitorEl = document.querySelector('[data-target="12480"]');
-if (visitorEl) {
-  const key = 'sadeem_visits';
-  let stored = parseInt(localStorage.getItem(key) || '12480');
-  // Increment by small random amount on each visit
-  stored += Math.floor(Math.random() * 4) + 1;
-  localStorage.setItem(key, stored);
-  visitorEl.setAttribute('data-target', stored);
-}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 </script>
-
+<!-- ══ HAMBURGER SCRIPT ══ -->
+<script>
+const ham=document.getElementById('hamburger');
+const drw=document.getElementById('mobDrawer');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  drw.classList.toggle('open');
+});
+function closeDrw(){ham.classList.remove('open');drw.classList.remove('open');}
+// close on outside click
+document.addEventListener('click',e=>{
+  if(!ham.contains(e.target)&&!drw.contains(e.target))closeDrw();
+});
+</script>
 </body>
 </html>
